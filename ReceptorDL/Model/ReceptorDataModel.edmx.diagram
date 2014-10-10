@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8791e9c0c87f4e579ff2ec65ba5feac3" Name="Diagrama1" >
+        <EntityTypeShape EntityType="ReceptorDataModel.Comprobante" Width="1.5" PointX="3.5" PointY="0.5" />
+        <EntityTypeShape EntityType="ReceptorDataModel.Emisor" Width="1.5" PointX="0.5" PointY="0.875" />
+        <EntityTypeShape EntityType="ReceptorDataModel.Receptor" Width="1.5" PointX="7.125" PointY="0.75" />
+        <AssociationConnector Association="ReceptorDataModel.EmisorComprobante" />
+        <AssociationConnector Association="ReceptorDataModel.ReceptorComprobante" />
+        <EntityTypeShape EntityType="ReceptorDataModel.Usuario" Width="1.5" PointX="3.5" PointY="4.125" />
+        <EntityTypeShape EntityType="ReceptorDataModel.EmisorDeUsuario" Width="1.5" PointX="0.5" PointY="3.5" />
+        <AssociationConnector Association="ReceptorDataModel.UsuarioEmisorDeUsuario" />
+        <AssociationConnector Association="ReceptorDataModel.EmisorEmisorDeUsuario" />
+        <EntityTypeShape EntityType="ReceptorDataModel.ReceptorDeUsuario" Width="1.5" PointX="6.875" PointY="3.75" />
+        <AssociationConnector Association="ReceptorDataModel.UsuarioReceptorDeUsuario" />
+        <AssociationConnector Association="ReceptorDataModel.ReceptorReceptorDeUsuario" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

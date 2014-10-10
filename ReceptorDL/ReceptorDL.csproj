@@ -30,8 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,7 +47,69 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Model\Comprobante.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DireccionFiscal.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Emisor.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EmisorDeUsuario.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Receptor.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ReceptorDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReceptorDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ReceptorDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ReceptorDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReceptorDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ReceptorDeUsuario.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuario.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Model\ReceptorDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ReceptorDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Model\ReceptorDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ReceptorDataModel.edmx</DependentUpon>
+      <LastGenOutput>ReceptorDataModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model\ReceptorDataModel.edmx.diagram">
+      <DependentUpon>ReceptorDataModel.edmx</DependentUpon>
+    </None>
+    <None Include="Model\ReceptorDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ReceptorDataModel.edmx</DependentUpon>
+      <LastGenOutput>ReceptorDataModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

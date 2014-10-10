@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="ReceptorDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="ReceptorDataModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ReceptorDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" >
+        <EntityContainer Name="ReceptorDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comprobantes" EntityType="ReceptorDataModel.Comprobante" />
+          <EntitySet Name="Emisores" EntityType="ReceptorDataModel.Emisor" />
+          <EntitySet Name="Receptores" EntityType="ReceptorDataModel.Receptor" />
+          <AssociationSet Name="EmisorComprobante" Association="ReceptorDataModel.EmisorComprobante">
+            <End Role="Emisor" EntitySet="Emisores" />
+            <End Role="Comprobante" EntitySet="Comprobantes" />
+          </AssociationSet>
+          <AssociationSet Name="ReceptorComprobante" Association="ReceptorDataModel.ReceptorComprobante">
+            <End Role="Receptor" EntitySet="Receptores" />
+            <End Role="Comprobante" EntitySet="Comprobantes" />
+          </AssociationSet>
+          <EntitySet Name="Usuarios" EntityType="ReceptorDataModel.Usuario" />
+          <EntitySet Name="EmisoresDeUsuario" EntityType="ReceptorDataModel.EmisorDeUsuario" />
+          <AssociationSet Name="UsuarioEmisorDeUsuario" Association="ReceptorDataModel.UsuarioEmisorDeUsuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="EmisorDeUsuario" EntitySet="EmisoresDeUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="EmisorEmisorDeUsuario" Association="ReceptorDataModel.EmisorEmisorDeUsuario">
+            <End Role="Emisor" EntitySet="Emisores" />
+            <End Role="EmisorDeUsuario" EntitySet="EmisoresDeUsuario" />
+          </AssociationSet>
+          <EntitySet Name="ReceptoresDeUsuario" EntityType="ReceptorDataModel.ReceptorDeUsuario" />
+          <AssociationSet Name="UsuarioReceptorDeUsuario" Association="ReceptorDataModel.UsuarioReceptorDeUsuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="ReceptorDeUsuario" EntitySet="ReceptoresDeUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="ReceptorReceptorDeUsuario" Association="ReceptorDataModel.ReceptorReceptorDeUsuario">
+            <End Role="Receptor" EntitySet="Receptores" />
+            <End Role="ReceptorDeUsuario" EntitySet="ReceptoresDeUsuario" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Comprobante">
+          <Key>
+            <PropertyRef Name="ComprobanteId" />
+          </Key>
+          <Property Type="Double" Name="ComprobanteId" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Emisor" Relationship="ReceptorDataModel.EmisorComprobante" FromRole="Comprobante" ToRole="Emisor" />
+          <Property Type="String" Name="EmisorRFC" Nullable="false" />
+          <NavigationProperty Name="Receptor" Relationship="ReceptorDataModel.ReceptorComprobante" FromRole="Comprobante" ToRole="Receptor" />
+          <Property Type="String" Name="ReceptorRFC" Nullable="false" />
+          <Property Type="String" Name="UUID" Nullable="false" />
+          <Property Type="String" Name="Estatus" Nullable="false" />
+          <Property Type="String" Name="SubTotal" Nullable="false" />
+          <Property Type="String" Name="Impuestos" Nullable="false" />
+          <Property Type="String" Name="Total" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emisor">
+          <Key>
+            <PropertyRef Name="EmisorRFC" />
+          </Key>
+          <Property Type="String" Name="EmisorRFC" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="DireccionFiscal" Type="ReceptorDataModel.DireccionFiscal" Nullable="false" />
+          <NavigationProperty Name="Comprobantes" Relationship="ReceptorDataModel.EmisorComprobante" FromRole="Emisor" ToRole="Comprobante" />
+        </EntityType>
+        <ComplexType Name="DireccionFiscal" >
+          <Property Type="String" Name="Callle" Nullable="false" />
+          <Property Type="String" Name="NoExterior" Nullable="false" />
+          <Property Type="String" Name="NoInterior" Nullable="false" />
+          <Property Type="String" Name="Colonia" Nullable="false" />
+          <Property Type="String" Name="Municipio" Nullable="false" />
+          <Property Type="String" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="Pais" Nullable="false" />
+          <Property Type="String" Name="CodigoPostal" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Receptor">
+          <Key>
+            <PropertyRef Name="ReceptorRFC" />
+          </Key>
+          <Property Type="String" Name="ReceptorRFC" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="DireccionFiscal" Type="ReceptorDataModel.DireccionFiscal" Nullable="false" />
+          <NavigationProperty Name="Comprobantes" Relationship="ReceptorDataModel.ReceptorComprobante" FromRole="Receptor" ToRole="Comprobante" />
+        </EntityType>
+        <Association Name="EmisorComprobante">
+          <End Type="ReceptorDataModel.Emisor" Role="Emisor" Multiplicity="1" />
+          <End Type="ReceptorDataModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emisor">
+              <PropertyRef Name="EmisorRFC" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="EmisorRFC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReceptorComprobante">
+          <End Type="ReceptorDataModel.Receptor" Role="Receptor" Multiplicity="1" />
+          <End Type="ReceptorDataModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receptor">
+              <PropertyRef Name="ReceptorRFC" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="ReceptorRFC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Type="Int32" Name="UsuarioId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="EmisorDeUsuario" >
+          <Key>
+            <PropertyRef Name="EmisorDeUsuarioId" />
+          </Key>
+          <Property Type="String" Name="EmisorDeUsuarioId" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="ReceptorDataModel.UsuarioEmisorDeUsuario" FromRole="EmisorDeUsuario" ToRole="Usuario" />
+          <Property Type="Int32" Name="UsuarioId" Nullable="false" />
+          <NavigationProperty Name="Emisor" Relationship="ReceptorDataModel.EmisorEmisorDeUsuario" FromRole="EmisorDeUsuario" ToRole="Emisor" />
+          <Property Type="String" Name="EmisorRFC" Nullable="false" />
+        </EntityType>
+        <Association Name="UsuarioEmisorDeUsuario">
+          <End Type="ReceptorDataModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ReceptorDataModel.EmisorDeUsuario" Role="EmisorDeUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="EmisorDeUsuario">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmisorEmisorDeUsuario">
+          <End Type="ReceptorDataModel.Emisor" Role="Emisor" Multiplicity="1" />
+          <End Type="ReceptorDataModel.EmisorDeUsuario" Role="EmisorDeUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emisor">
+              <PropertyRef Name="EmisorRFC" />
+            </Principal>
+            <Dependent Role="EmisorDeUsuario">
+              <PropertyRef Name="EmisorRFC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ReceptorDeUsuario">
+          <Key>
+            <PropertyRef Name="ReceptorDeUsuarioId" />
+          </Key>
+          <Property Type="Int32" Name="ReceptorDeUsuarioId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Usuario" Relationship="ReceptorDataModel.UsuarioReceptorDeUsuario" FromRole="ReceptorDeUsuario" ToRole="Usuario" />
+          <Property Type="Int32" Name="UsuarioId" Nullable="false" />
+          <NavigationProperty Name="Receptor" Relationship="ReceptorDataModel.ReceptorReceptorDeUsuario" FromRole="ReceptorDeUsuario" ToRole="Receptor" />
+          <Property Type="String" Name="ReceptorRFC" Nullable="false" />
+        </EntityType>
+        <Association Name="UsuarioReceptorDeUsuario">
+          <End Type="ReceptorDataModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ReceptorDataModel.ReceptorDeUsuario" Role="ReceptorDeUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="ReceptorDeUsuario">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReceptorReceptorDeUsuario">
+          <End Type="ReceptorDataModel.Receptor" Role="Receptor" Multiplicity="1" />
+          <End Type="ReceptorDataModel.ReceptorDeUsuario" Role="ReceptorDeUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receptor">
+              <PropertyRef Name="ReceptorRFC" />
+            </Principal>
+            <Dependent Role="ReceptorDeUsuario">
+              <PropertyRef Name="ReceptorRFC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ReceptorDataModel" />
+        <Alias Key="Target" Value="ReceptorDataModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="ReceptorDataModelContainer" StorageEntityContainer="ReceptorDataModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
