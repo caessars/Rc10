@@ -7,5 +7,6 @@ namespace ReceptorDL
 {
     public class Class1
     {
+
     }
 }
