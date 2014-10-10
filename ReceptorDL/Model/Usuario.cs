@@ -14,6 +14,16 @@ namespace ReceptorDL.Model
     
     public partial class Usuario
     {
+        public Usuario()
+        {
+            this.Comprobantes = new HashSet<Comprobante>();
+        }
+    
         public int UsuarioId { get; set; }
+        public string Nickname { get; set; }
+        public string Nombre { get; set; }
+        public string CorreoElectronico { get; set; }
+    
+        public virtual ICollection<Comprobante> Comprobantes { get; set; }
     }
 }

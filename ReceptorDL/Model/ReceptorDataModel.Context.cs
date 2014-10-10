@@ -31,5 +31,6 @@ namespace ReceptorDL.Model
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<EmisorDeUsuario> EmisoresDeUsuario { get; set; }
         public DbSet<ReceptorDeUsuario> ReceptoresDeUsuario { get; set; }
+        public DbSet<Rol> Roles { get; set; }
     }
 }

@@ -22,8 +22,10 @@ namespace ReceptorDL.Model
         public string SubTotal { get; set; }
         public string Impuestos { get; set; }
         public string Total { get; set; }
+        public int UsuarioId { get; set; }
     
         public virtual Emisor Emisor { get; set; }
         public virtual Receptor Receptor { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

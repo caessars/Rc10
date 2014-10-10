@@ -17,8 +17,10 @@ namespace ReceptorDL.Model
         public int ReceptorDeUsuarioId { get; set; }
         public int UsuarioId { get; set; }
         public string ReceptorRFC { get; set; }
+        public int RolId { get; set; }
     
         public virtual Usuario Usuario { get; set; }
         public virtual Receptor Receptor { get; set; }
+        public virtual Rol Rol { get; set; }
     }
 }

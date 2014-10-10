@@ -80,6 +80,9 @@
     <Compile Include="Model\ReceptorDeUsuario.cs">
       <DependentUpon>ReceptorDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Rol.cs">
+      <DependentUpon>ReceptorDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Usuario.cs">
       <DependentUpon>ReceptorDataModel.tt</DependentUpon>
     </Compile>

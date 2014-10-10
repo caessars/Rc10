@@ -43,6 +43,19 @@
             <End Role="Receptor" EntitySet="Receptores" />
             <End Role="ReceptorDeUsuario" EntitySet="ReceptoresDeUsuario" />
           </AssociationSet>
+          <AssociationSet Name="UsuarioComprobante" Association="ReceptorDataModel.UsuarioComprobante">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Comprobante" EntitySet="Comprobantes" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="ReceptorDataModel.Rol" />
+          <AssociationSet Name="RolEmisorDeUsuario" Association="ReceptorDataModel.RolEmisorDeUsuario">
+            <End Role="Rol" EntitySet="Roles" />
+            <End Role="EmisorDeUsuario" EntitySet="EmisoresDeUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="RolReceptorDeUsuario" Association="ReceptorDataModel.RolReceptorDeUsuario">
+            <End Role="Rol" EntitySet="Roles" />
+            <End Role="ReceptorDeUsuario" EntitySet="ReceptoresDeUsuario" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Comprobante">
           <Key>
@@ -58,6 +71,8 @@
           <Property Type="String" Name="SubTotal" Nullable="false" />
           <Property Type="String" Name="Impuestos" Nullable="false" />
           <Property Type="String" Name="Total" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="ReceptorDataModel.UsuarioComprobante" FromRole="Comprobante" ToRole="Usuario" />
+          <Property Type="Int32" Name="UsuarioId" Nullable="false" />
         </EntityType>
         <EntityType Name="Emisor">
           <Key>
@@ -114,6 +129,10 @@
             <PropertyRef Name="UsuarioId" />
           </Key>
           <Property Type="Int32" Name="UsuarioId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Comprobantes" Relationship="ReceptorDataModel.UsuarioComprobante" FromRole="Usuario" ToRole="Comprobante" />
+          <Property Type="String" Name="Nickname" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="false" />
         </EntityType>
         <EntityType Name="EmisorDeUsuario" >
           <Key>
@@ -124,6 +143,8 @@
           <Property Type="Int32" Name="UsuarioId" Nullable="false" />
           <NavigationProperty Name="Emisor" Relationship="ReceptorDataModel.EmisorEmisorDeUsuario" FromRole="EmisorDeUsuario" ToRole="Emisor" />
           <Property Type="String" Name="EmisorRFC" Nullable="false" />
+          <NavigationProperty Name="Rol" Relationship="ReceptorDataModel.RolEmisorDeUsuario" FromRole="EmisorDeUsuario" ToRole="Rol" />
+          <Property Type="Int32" Name="RolId" Nullable="false" />
         </EntityType>
         <Association Name="UsuarioEmisorDeUsuario">
           <End Type="ReceptorDataModel.Usuario" Role="Usuario" Multiplicity="1" />
@@ -158,6 +179,8 @@
           <Property Type="Int32" Name="UsuarioId" Nullable="false" />
           <NavigationProperty Name="Receptor" Relationship="ReceptorDataModel.ReceptorReceptorDeUsuario" FromRole="ReceptorDeUsuario" ToRole="Receptor" />
           <Property Type="String" Name="ReceptorRFC" Nullable="false" />
+          <NavigationProperty Name="Rol" Relationship="ReceptorDataModel.RolReceptorDeUsuario" FromRole="ReceptorDeUsuario" ToRole="Rol" />
+          <Property Type="Int32" Name="RolId" Nullable="false" />
         </EntityType>
         <Association Name="UsuarioReceptorDeUsuario">
           <End Type="ReceptorDataModel.Usuario" Role="Usuario" Multiplicity="1" />
@@ -180,6 +203,49 @@
             </Principal>
             <Dependent Role="ReceptorDeUsuario">
               <PropertyRef Name="ReceptorRFC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioComprobante">
+          <End Type="ReceptorDataModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ReceptorDataModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="RolId" />
+          </Key>
+          <Property Type="Int32" Name="RolId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Descripcion" Nullable="false" />
+        </EntityType>
+        <Association Name="RolEmisorDeUsuario">
+          <End Type="ReceptorDataModel.Rol" Role="Rol" Multiplicity="1" />
+          <End Type="ReceptorDataModel.EmisorDeUsuario" Role="EmisorDeUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="RolId" />
+            </Principal>
+            <Dependent Role="EmisorDeUsuario">
+              <PropertyRef Name="RolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RolReceptorDeUsuario">
+          <End Type="ReceptorDataModel.Rol" Role="Rol" Multiplicity="1" />
+          <End Type="ReceptorDataModel.ReceptorDeUsuario" Role="ReceptorDeUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="RolId" />
+            </Principal>
+            <Dependent Role="ReceptorDeUsuario">
+              <PropertyRef Name="RolId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
